@@ -16,7 +16,6 @@ class Database
             $dbname = 'ges_auchan';
             $user = 'postgres';
             $pass = 'passer123'; 
-
             $dsn = "pgsql:host=$host;port=5432;dbname=$dbname";
             try {
                 self::$pdo = new PDO($dsn, $user, $pass, [

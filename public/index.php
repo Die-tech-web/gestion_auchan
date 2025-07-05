@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../route/route.web.php';
 
@@ -42,4 +46,5 @@ require_once __DIR__ . '/../route/route.web.php';
 //Apporter listes des commandes chargés dynamiquement a rendre demain sinon wann di na niou ray !!
 //in
 //integrer page de conncexion controller securityController qui le charge
-// layout le code commun entre plusieurs pages 
+// layout le code commun entre plusieurs pages
+

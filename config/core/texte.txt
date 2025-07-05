@@ -1,0 +1,11 @@
+la classe validator doit etre gerer on a un tableau de erreur, les erreur sont stocker dans le tableau par les formulaire comme loigin et password il doit stcker chaqye erreur dans les champs , is valide compte le nombre deeru dans le tableau , get error recupere les erreurs
+LE CLIENT QUAN IL SE CONNECTE IL VOI MES COMMANDES SEULEMENT LE VENDEUR VOIS TOUT 
+IL FAUT AJOUTER LES FICHIERS CEST LA OU ON AURA LA CHAINE DE CONNECTION DE LA BAS DE DONNEES ;AU DEMARAGE ON
+TOUT CE QUI ETATIT DNS DATABASE ON LE MET DANS ENV MAINTENANT HTTP  8000
+
+DANS LE FICHIER ENV ON MET LURL DU,SERVER TOUT CE QUI AVAIT INDEX.PHP ON  REMPLACE PAR LE FICHIER HTPP LOCALHOS QUI EST DANS LE FICHIER D'ENVIRONNEMEN
+
+
+DOCUMENTtation sur methode generique toString
+
+creer un object sans faire new

@@ -63,7 +63,7 @@ public static function toObject(array $row): static
             $row['id'],
             $row['nom'],
             $row['login'],
-            $row['motDePasse']
+            motDePasse: $row['password'] ?? '',
         );
     }
 

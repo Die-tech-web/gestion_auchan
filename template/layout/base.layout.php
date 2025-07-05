@@ -8,14 +8,14 @@
   </head>
   <body class="bg-[#101d0b] min-h-screen text-white">
     <!-- Navbar -->
-   <?php require_once '../template/layout/partial/header.html.php';?>
-    
+    <?php if (!isset($showNavbar) || $showNavbar): ?>
+      <!-- Ici le code HTML de la navbar -->
+    <?php endif; ?>
     <main class="max-w-5xl mx-auto mt-8 p-8">
         <?php
             echo $contentForLayout
         ?>
     </main>
-
   </body>
 </html>
 

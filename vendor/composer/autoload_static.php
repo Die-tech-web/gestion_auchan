@@ -13,6 +13,7 @@ class ComposerStaticInitabcb5b56212a2b65075711852b4364c1
         ),
         'A' => 
         array (
+            'App\\Validator\\' => 14,
             'App\\Service\\' => 12,
             'App\\Repository\\' => 15,
             'App\\Entity\\' => 11,
@@ -25,6 +26,10 @@ class ComposerStaticInitabcb5b56212a2b65075711852b4364c1
         'Vendor\\Challenge2\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
+        ),
+        'App\\Validator\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/validator',
         ),
         'App\\Service\\' => 
         array (

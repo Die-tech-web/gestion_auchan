@@ -1,41 +1,36 @@
 <?php
 namespace App\Controller;
 use App\Config\Core\AbstractController;
+use App\Service\CommandeService;
 
-class CommandeController extends AbstractController{
+class CommandeController extends AbstractController
+{
+    private CommandeService $commandeService;
 
-    // public function form(){
-    //     require_once '../template/commande/form.html.php';
-    // }
-
-    // public function list(){
-    //     require_once '../template/commande/list.html.php';
-    // }
-   
-    public function index(){
-        
-        $this->renderHtml('commande/list.html.php');
-    }
-    public function store(){
-
-    }
-    public function create(){
-                $this->renderHtml('commande/form.html.php');
-
+    public function __construct()
+    {
+        $this->commandeService = new CommandeService();
     }
 
-    public function destroy(){
-
-    }
-    public function show(){
-    }
-    public function edit(){
-
-    }
-    public function update(){
+    public function index()
+    {
+        $commandes = $this->commandeService->listerCommandes();
+        // var_dump($commandes); die; // Ajoute ceci temporairement
+        $this->renderHtml('commande/list.html.php', ['commandes' => $commandes]);
     }
 
-    //index 
-    //create 
-    //store
+    public function store()
+    {
+        // À compléter pour l'enregistrement d'une commande
+    }
+
+    public function create()
+    {
+        $this->renderHtml('commande/form.html.php');
+    }
+
+    public function destroy() {}
+    public function show() {}
+    public function edit() {}
+    public function update() {}
 }

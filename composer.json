@@ -8,12 +8,15 @@
             "App\\Config\\Core\\": "config/core/",
             "App\\Repository\\": "src/repository/",
             "App\\Service\\": "src/service/",
-            "App\\Controller\\": "controller/"
+            "App\\Controller\\": "controller/",
+            "App\\Validator\\": "src/validator/"
+
         }
     },
     "authors": [
+        
         {
-            "name": "Mapathe Ndiaye"
+            "name": "Madie"
         }
     ],
     "require": {}

@@ -1,6 +1,4 @@
-
-
-    <div class="max-w-6xl mx-auto mt-6 p-6 bg-[#151f11] rounded-lg shadow-lg">
+<div class="max-w-6xl mx-auto mt-6 p-6 bg-[#151f11] rounded-lg shadow-lg">
       <!-- Header -->
     
 
@@ -144,5 +142,19 @@
         >
           &gt;
         </button>
+        
       </div>
     </div>
+
+
+// <!-- filepath: /home/madie/Documents/newChallenge/challengePHP2/template/commande/list.html.php -->
+// <h1>Liste des commandes</h1>
+<?php if (!empty($commandes)): ?>
+    <ul>
+        <?php foreach ($commandes as $commande): ?>
+            <li><?= htmlspecialchars($commande->getId()) ?> - <?= htmlspecialchars($commande->getDate()) ?></li>
+        <?php endforeach; ?>
+    </ul>
+<?php else: ?>
+    <p>Aucune commande trouvée.</p>
+<?php endif; ?>

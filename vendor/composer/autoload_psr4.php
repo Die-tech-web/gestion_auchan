@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Vendor\\Challenge2\\' => array($baseDir . '/src'),
+    'App\\Validator\\' => array($baseDir . '/src/validator'),
     'App\\Service\\' => array($baseDir . '/src/service'),
     'App\\Repository\\' => array($baseDir . '/src/repository'),
     'App\\Entity\\' => array($baseDir . '/src/entities'),

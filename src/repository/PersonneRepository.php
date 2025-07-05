@@ -1,45 +1,114 @@
 <?php
 namespace App\Repository;
 
+use App\Config\Core\AbstractRepository;
 use App\Entity\Personne;
-use App\Entity\Client;
 use App\Entity\Vendeur;
 use App\Config\Core\Database;
 
-class PersonneRepository {
-    
+class PersonneRepository extends AbstractRepository
+{
     private \PDO $pdo;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->pdo = Database::getConnection();
     }
 
-    public function selectAll(): array {
-        $stmt = $this->pdo->query("SELECT * FROM personne");
-        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-
-        $personnes = [];
-        foreach ($rows as $row) {
-            $personnes[] = $this->mapToEntity($row);
-        }
-        return $personnes;
+    /**
+     * Deletes a record from the database.
+     *
+     * @return bool Indicates whether the deletion was successful
+     */
+    public function delete(): bool
+    {
+        return false;
     }
 
-    public function findById(int $id): ?Personne {
-        $stmt = $this->pdo->prepare("SELECT * FROM personne WHERE id = :id");
+    public function insert(): bool
+    {
+        return false;
+    }
+
+    public function selectAll(): array
+    {
+        return [];
+    }
+
+    public function selectBy(array $filtre): array
+    {
+        return [];
+    }
+
+    public function selectByEmail(string $email): array
+    {
+        return [];
+    }
+
+    public function selectById(int $id): array
+    {
+        return [];
+    }
+
+    public function update(): bool
+    {
+        return false;
+    }
+
+    public function selectByLoginAndPassword(string $login, string $password): ?Vendeur
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM personne WHERE login = :login AND password = :password ");
+        $stmt->execute(['login' => $login, 'password' => $password]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        // var_dump($row); // Pour débogage, à supprimer en production
+        // die();
+        if ($row) {
+            // Vérifier si l'utilisateur est un vendeur
+            if ($row['type'] === 'Vendeur') {
+                return Vendeur::toObject($row);
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Vérifier si un utilisateur est un vendeur
+     */
+    public function isVendeur(int $id): bool
+    {
+        $stmt = $this->pdo->prepare("SELECT type FROM personne WHERE id = :id");
         $stmt->execute(['id' => $id]);
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        return $row ? $this->mapToEntity($row) : null;
+        return $row && $row['type'] === 'vendeur';
     }
 
-    private function mapToEntity(array $row): Personne {
-        if (isset($row['type']) && strtolower($row['type']) === 'client') {
-            return Client::toObject($row);
-        } else {
-            return Vendeur::toObject($row);
+    /**
+     * Récupérer tous les vendeurs
+     */
+    public function getAllVendeurs(): array
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM personne WHERE type = 'vendeur'");
+        $stmt->execute();
+        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+        $vendeurs = [];
+        foreach ($rows as $row) {
+            $vendeurs[] = Vendeur::toObject($row);
         }
+
+        return $vendeurs;
     }
 
-    // Ajoute ici d'autres méthodes (save, update, delete) selon tes besoins
+    /**
+     * Vérifier si un utilisateur est un vendeur
+     */
+
+
+    /**
+     * Récupérer tous les vendeurs
+     */
+
 }
