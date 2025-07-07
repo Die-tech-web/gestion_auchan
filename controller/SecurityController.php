@@ -3,14 +3,15 @@ namespace App\Controller;
 
 use App\Config\Core\AbstractController;
 use App\Service\SecurityService;
+use App\Config\Core\Validator;
 
 class SecurityController extends AbstractController
 {
     private SecurityService $securityService;
 
-    public function __construct(SecurityService $securityService)
+    public function __construct()
     {
-        $this->securityService = $securityService;
+        $this->securityService = SecurityService::getInstance();
     }
 
     public function index()
@@ -22,56 +23,35 @@ class SecurityController extends AbstractController
     {
         $login = $_POST['login'] ?? '';
         $password = $_POST['password'] ?? '';
-        // var_dump('jg');die();
-            // header('Location: /list');
-            // exit;
-        // Validation simple sans classe Validator
-        $errors = [];
-        
-        if (empty($login)) {
-            $errors['login'] = 'Le login est requis';
-        } elseif (!filter_var($login, FILTER_VALIDATE_EMAIL)) {
-            $errors['login'] = 'Le format de l\'email est invalide';
-        }
+        $validator = new Validator();
 
-        if (empty($password)) {
-            $errors['password'] = 'Le mot de passe est requis';
-        } elseif (strlen($password) < 3) {
-            $errors['password'] = 'Le mot de passe doit contenir au moins 3 caractères';
-        }
+        $validator->validator($login, 'login');
+        $validator->validator($password, 'password');
 
-        // Tentative de connexion
-     
-        // Si il y a des erreurs de validation
+        $errors = $validator->getErrors();
+
         if (!empty($errors)) {
-            $this->renderHtml('security/login.html.php', [
-                'showNavbar' => false,
-                'error' => $errors
-            ]);
-            exit;
+            // Afficher la page de login avec les erreurs
+            $this->renderHtml('security/login.html.php', ['error' => $errors]);
+            return;
         }
 
-        // Tentative de connexion
-        // var_dump($password); // Pour débogage, à supprimer en production
-        //     die();
-        $vendeur = $this->securityService->seConnecter($login, $password);
-        // var_dump('ok');
-        // var_dump($vendeur);die();
-        if ($vendeur) {
-            
-            session_start();
-            header('Location: /list');
-            exit;// Démarrer la session et rediriger vers la liste des commandes
-            
-            
-        } else {
-            // Connexion échouée - retour au login avec message d'erreur
-            $this->renderHtml('security/login.html.php', [
-                'showNavbar' => false,
-                'error' => ['Identifiants incorrects ou vous n\'êtes pas autorisé à accéder à ce système.']
-            ]);
-            exit;
+        // Authentification (exemple)
+        $user = $this->securityService->seConnecter($login, $password);
+        if (!$user) {
+            $errors['login'] = 'Identifiants invalides';
+            $this->renderHtml('security/login.html.php', ['error' => $errors]);
+            return;
         }
+
+        // Connexion réussie
+        $_SESSION['user'] = [
+            'id' => $user->getId(),
+            'role' => 'vendeur', // ou 'client' selon le cas
+            'login' => $user->getLogin()
+        ];
+        header('Location: /list');
+        exit();
     }
 
     public function logout()

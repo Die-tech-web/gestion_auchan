@@ -1,11 +1,14 @@
 <div class="min-h-screen flex items-center justify-center bg-[#101d0b]">
     <div class="bg-[#151f11] p-8 rounded-lg shadow-lg w-full max-w-md">
         <h2 class="text-2xl font-bold text-lime-400 mb-6 text-center">Connexion</h2>
-        <?php if (isset($error)): ?>
+        <?php if (isset($error) && is_string($error)): ?>
             <div class="mb-4 text-red-400 text-center"><?= htmlspecialchars($error) ?></div>
         <?php endif; ?>
         <?php if (isset($error['login'])): ?>
-            <div class="text-red-400"><?= htmlspecialchars(implode(', ', $error['login'])) ?></div>
+            <div class="mb-4 text-red-400 text-center"><?= htmlspecialchars($error['login']) ?></div>
+        <?php endif; ?>
+        <?php if (isset($error['password'])): ?>
+            <div class="mb-4 text-red-400 text-center"><?= htmlspecialchars($error['password']) ?></div>
         <?php endif; ?>
         <form method="post" action="/login">
             <div class="mb-4">

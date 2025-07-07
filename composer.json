@@ -19,5 +19,7 @@
             "name": "Madie"
         }
     ],
-    "require": {}
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
 }

@@ -6,11 +6,20 @@ use App\Entity\Vendeur;
 
 class SecurityService
 {
+    private static ?SecurityService $instance = null;
     private PersonneRepository $personneRepository;
 
-    public function __construct(PersonneRepository $personneRepository)
+    private function __construct()
     {
-        $this->personneRepository = $personneRepository;
+        $this->personneRepository = PersonneRepository::getInstance();
+    }
+
+    public static function getInstance(): SecurityService
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     public function seConnecter(string $login, string $password): ?Vendeur

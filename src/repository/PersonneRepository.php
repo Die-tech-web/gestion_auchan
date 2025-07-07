@@ -8,11 +8,20 @@ use App\Config\Core\Database;
 
 class PersonneRepository extends AbstractRepository
 {
+    private static ?PersonneRepository $instance = null;
     private \PDO $pdo;
 
-    public function __construct()
+    private function __construct()
     {
         $this->pdo = Database::getConnection();
+    }
+
+    public static function getInstance(): PersonneRepository
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
     }
 
     /**
@@ -61,8 +70,7 @@ class PersonneRepository extends AbstractRepository
         $stmt->execute(['login' => $login, 'password' => $password]);
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        // var_dump($row); // Pour débogage, à supprimer en production
-        // die();
+       
         if ($row) {
             // Vérifier si l'utilisateur est un vendeur
             if ($row['type'] === 'Vendeur') {
